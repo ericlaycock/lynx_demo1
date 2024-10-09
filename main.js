@@ -63,9 +63,30 @@ async function sendMessage() {
     while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        assistantMessage += decoder.decode(value);
+        
+        const decodedChunk = decoder.decode(value);
+        const jsonChunks = decodedChunk.split('\n\n').filter(line => line.startsWith('data:'));
+
+        for (const chunk of jsonChunks) {
+            const json = chunk.replace('data: ', '').trim();
+
+            if (json === '[DONE]') {
+                break;
+            }
+
+            try {
+                const parsed = JSON.parse(json);
+                const deltaContent = parsed.choices[0].delta.content;
+
+                if (deltaContent) {
+                    assistantMessage += deltaContent;
+                    appendMessage('Assistant', deltaContent);
+                }
+            } catch (e) {
+                console.error("Error parsing stream data:", e);
+            }
+        }
     }
 
-    appendMessage('Assistant', assistantMessage);
     document.getElementById('message-input').value = '';  // Clear input box
 }
