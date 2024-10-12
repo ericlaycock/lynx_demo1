@@ -27,15 +27,14 @@
 
     <!-- API key input -->
     <label for="api-key">Enter your API Key:</label>
-    <input type="password" id="api-key" placeholder="API Key"><br><br>
+    <input type="password" id="api-key" placeholder="API Key" value="sk-proj-knK5Nuo2Gl9Bicap7PUFT3BlbkFJfSSyucdPdBTnCnvNEwg8"><br><br>
 
-    <!-- File upload -->
-    <label for="file-input">Upload a .txt file:</label>
-    <input type="file" id="file-input" accept=".txt"><br><br>
-
-    <!-- System message input -->
-    <label for="system-message">System Message:</label>
-    <input type="text" id="system-message" value="You force me to practice the lesson content at the A2 level. Be brief and ask me questions to force me to speak. Act as a tutor."><br><br>
+    <!-- Language selection dropdown -->
+    <label for="language-select">Choose a lesson level:</label>
+    <select id="language-select" onchange="handleLanguageSelection()">
+        <option value="french_a1_a2">French A1/A2</option>
+        <option value="french_a2_b1">French A2/B1</option>
+    </select><br><br>
 
     <!-- Chat display -->
     <div id="chat-box"></div>
